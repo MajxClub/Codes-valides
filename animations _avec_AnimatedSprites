@@ -1,0 +1,22 @@
+##### a placer parmi les variables #####
+onready var animated_sprite = get_node("AnimatedSprite")
+
+##### a placer parmi les fonctions #####
+# cette fonction doit inclure les bonnes appellations d'input et d'animation
+# cet exemple necessite 3 animations : WalkRight, Jump et Idle.
+
+func get_input(): # a créer ou si elle existe déjà  simplement y inclure les lignes ci-dessous
+	if Input.is_action_pressed('ui_right') and is_on_floor():
+		animated_sprite.play ("WalkRight")
+		$AnimatedSprite.flip_h = false
+	elif Input.is_action_pressed('ui_left') and is_on_floor():
+		$AnimatedSprite.flip_h = true
+		animated_sprite.play ("WalkRight")
+	elif Input.is_action_pressed('ui_right') and Input.is_action_pressed ('ui_select'):
+		animated_sprite.play ("Jump")
+	elif Input.is_action_pressed('ui_left') and Input.is_action_pressed ('ui_select'):
+		animated_sprite.play ("Jump")
+	elif Input.is_action_pressed('ui_select') :
+		animated_sprite.play ("Jump")
+	else:
+		animated_sprite.play ("Idle")
