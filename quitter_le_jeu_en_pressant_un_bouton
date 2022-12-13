@@ -1,0 +1,6 @@
+#Ce code est à utiliser quand vous voulez que le jeu soit quitté si le joueur presse un bouton de l'écran
+#Il doit être écrit dans un script auquel est préalablement rattaché un "signal" (button_pressed) sur le "button" (quand vous le faites, un code par défaut est ajouté au script)
+#Remplacez le code par défaut par celui-ci:
+
+func _on_Button_pressed():
+	get_tree().quit()
