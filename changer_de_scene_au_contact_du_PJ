@@ -1,0 +1,6 @@
+#Ce code est à utiliser quand vous voulez passer de la scène actuelle à une autre scène au moment ou votre Personnage Joueur touche une zone Area2D
+#Il doit être écrit dans un script auquel est préalablement rattaché un "signal" sur l'Area2D (quand vous le faites, un code par défaut est ajouté au script)
+#Remplacez le code par défaut par celui-ci plus fluide
+
+func _on_Area2D_body_entered(_body : KinematicBody2D) -> void:
+	get_tree().change_scene("res://NOM DE LA SCENE CIBLEE.tscn")
