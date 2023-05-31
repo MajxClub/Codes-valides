@@ -1,0 +1,29 @@
+###### TOUT METTRE DANS LE SCRIPT KinematicBody2D DU PERSONNAGE ######
+extends KinematicBody2D
+
+var previousPosition: Vector2
+
+func _ready():
+	previousPosition = position
+
+func _physics_process(delta):
+	var currentPosition = position
+	var direction = currentPosition - previousPosition
+	
+	if direction.x < 0:
+		get_node( "AnimatedSprite" ).play("WalkLeft")
+	elif direction.x > 0:
+		get_node( "AnimatedSprite" ).play("WalkRight")
+	else:
+		get_node( "AnimatedSprite" ).play("Idle")
+	previousPosition = currentPosition
+
+######  EFFET DE PROFONDEUR  ###########
+func _process(delta):
+	var min_scale = 0.1
+	var max_scale = 1
+	var far_distance = 180
+	var near_distance = 300
+	var distance = (position.y - far_distance) / near_distance
+	scale.x = lerp(min_scale, max_scale, distance)
+	scale.y = lerp(min_scale, max_scale, distance)
