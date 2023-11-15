@@ -1,0 +1,49 @@
+extends KinematicBody
+
+const MOVE_SPEED = 2
+const GRAVITY = 9.81
+
+onready var raycast = $RayCast
+onready var anim_player = $AnimationPlayer
+
+var player = null
+var dead = false
+var velocity = Vector3()
+
+func _ready():
+	anim_player.play("walk")
+	add_to_group("monstres")
+
+func _physics_process(delta):
+	if dead:
+		return
+	if player == null:
+		return
+
+	# Detecter la position du joueur
+	var vec_to_player = player.translation - translation
+	vec_to_player = vec_to_player.normalized()
+	raycast.cast_to = vec_to_player * 1.5
+
+	# Mouvement horizontal (vers le joueur)
+	move_and_collide(vec_to_player * MOVE_SPEED * delta)
+
+	# Gestion de la gravité
+	velocity.y -= GRAVITY * delta
+	move_and_slide(velocity, Vector3.UP)
+	if is_on_floor():
+		velocity.y = 0
+
+	if raycast.is_colliding():
+		var coll = raycast.get_collider()
+		if coll != null and coll.name == "Player":
+			coll.kill()
+
+func kill():
+	dead = true
+	$CollisionShape.disabled = true
+	$killzone/CollisionShape.disabled = true
+	anim_player.play("mort")
+
+func set_player(p):
+	player = p
